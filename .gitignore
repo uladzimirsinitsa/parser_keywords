@@ -1,0 +1,6 @@
+.env
+env
+documentation
+Dockerfile
+.dockerignore
+tz.txt

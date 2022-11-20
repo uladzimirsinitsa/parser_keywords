@@ -1,0 +1,75 @@
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Данные</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container">
+
+        <table class="table table-striped table-bordered table-hover">
+            <tr class="table-success">
+                <td>Ключевые слова:</td>
+                {% for url in target_urls %}
+                    <td>{{ url }}</td>
+                {% endfor %}
+                <td>Ваша страцица</td>
+                <td>Минимум</td>
+                <td>Максимум</td>
+                <td>Среднее</td>  
+            </tr>
+            {% for i in data %}
+            <tr>
+                {% for j in i %}
+                <td>{{ j }}</td>
+                    {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <br>
+        <table class="table table-striped table-bordered table-hover">
+
+            Объем знаков (без пробелов)
+            {% for i in table_2_matrix %}
+            <tr>
+                {% for j in i %}
+                <td>{{ j }}</td>
+                    {% endfor %}
+            </tr>
+            {% endfor %}
+            
+        </table>
+        <br>
+        Требуется объем от {{ mean_letters }} до {{ max_letters }}
+        <br>
+         
+            <textarea id=txt hidden>{{ text }}</textarea>
+            <br>
+            <textarea id=keyword_1 hidden>{{ keyword_1 }}</textarea>
+            <br>
+            <button class="btn btn-success" id=sf>Сохранить ТЗ</button>
+            <br>
+        </div>  
+</body>
+
+<script>
+    function textToFile (text, name) {
+        const b = new Blob([text], {type: 'text/plain'});
+        const url = window.URL.createObjectURL(b);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = name || 'text.txt';
+        a.type = 'text/plain';
+        a.addEventListener('click', () => {
+            setTimeout(() => window.URL.revokeObjectURL(url), 10000);
+        })
+        a.click()
+    }
+
+    document.getElementById('sf').addEventListener('click', () => {
+        textToFile (document.getElementById('txt').value, document.getElementById('keyword_1').value)
+    })
+</script>
+</html>
